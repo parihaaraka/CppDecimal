@@ -8,3 +8,5 @@ bld*/
 # Visual Studio Code
 .vscode/
 .cache/
+
+*.user

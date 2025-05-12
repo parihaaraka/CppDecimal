@@ -36,6 +36,16 @@ class arena
     char* ptr_;
 
 public:
+    class bad_alloc: public std::bad_alloc
+    {
+        using std::bad_alloc::bad_alloc;
+    public:
+        inline virtual const char* what() const noexcept
+        {
+            return "short_alloc has outlived arena";
+        }
+    };
+
     ~arena() {ptr_ = nullptr;}
     arena() noexcept : ptr_(buf_) {}
     arena(const arena&) = delete;
@@ -69,7 +79,7 @@ arena<N, alignment>::allocate(std::size_t n)
 {
     static_assert(ReqAlign <= alignment, "alignment is too small for this arena");
     //-assert(pointer_in_buffer(ptr_) && "short_alloc has outlived arena");
-    if(!pointer_in_buffer(ptr_)) throw std::bad_alloc("short_alloc has outlived arena");
+    if(!pointer_in_buffer(ptr_)) throw bad_alloc();
     auto const aligned_n = align_up(n);
     if (static_cast<decltype(aligned_n)>(buf_ + N - ptr_) >= aligned_n)
     {
@@ -89,7 +99,7 @@ void
 arena<N, alignment>::deallocate(char* p, std::size_t n) noexcept
 {
     //-assert(pointer_in_buffer(ptr_) && "short_alloc has outlived arena");
-    if(!pointer_in_buffer(ptr_)) throw std::bad_alloc("short_alloc has outlived arena");
+    if(!pointer_in_buffer(ptr_)) throw bad_alloc();
     if (pointer_in_buffer(p))
     {
         n = align_up(n);

@@ -1,14 +1,17 @@
+cmake_minimum_required(VERSION 4.0)
+set(CMAKE_CXX_STANDARD 20)
+
 add_library(decimal  
  STATIC
-  decContext.c 
-  decimal32.c
-  decimal64.c
-  decimal128.c  
-  decNumber.c 
-  decPacked.c 
-  decSingle.c 
-  decDouble.c
-  decQuad.c  
+  decNumber/decContext.c
+  decNumber/decimal32.c
+  decNumber/decimal64.c
+  decNumber/decimal128.c
+  decNumber/decNumber.c
+  decNumber/decPacked.c
+  decNumber/decSingle.c
+  decNumber/decDouble.c
+  decNumber/decQuad.c
   DecContext.cc
   DecNumber.cc
   DecSingle.cc
@@ -20,4 +23,5 @@ add_library(decimal
 #target_include_directories(decnumber 
 # INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
 #)
-target_include_directories(decimal PUBLIC .)
+
+target_include_directories(decimal PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/decNumber)
