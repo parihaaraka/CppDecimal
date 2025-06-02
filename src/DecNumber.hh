@@ -284,6 +284,9 @@ public:
   bool isNegative() const
   { return decNumberIsNegative(this); }
 
+  bool isPositive() const
+  { return (bits&DECSPECIAL) == 0 && (bits&DECNEG) == 0 && (*lsu!=0 || digits!=1); }
+
   bool isQNaN() const
   { return decNumberIsQNaN(this); }
 
