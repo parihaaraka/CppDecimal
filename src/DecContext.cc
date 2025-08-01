@@ -40,6 +40,8 @@ DecContext::DecContext(int32_t kind)
 
   // By default allow maximum allowable precision
   setDigits(DecNumDigits);
+  setEmax(DecNumDigits - 1);
+  setEmin(-1);
 }
 
 
