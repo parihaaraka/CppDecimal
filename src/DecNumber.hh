@@ -60,6 +60,8 @@ public:
   // the value of val, which may need up to ten digits.
   DecNumber(uint32_t val) { fromUInt32(val); }
   DecNumber(int32_t val) { fromInt32(val); }
+  DecNumber(uint64_t val) { fromUInt64(val); }
+  DecNumber(int64_t val) { fromInt64(val); }
   DecNumber(double d) { fromDouble(d); }
 
   // Conversion constructors using composite types
@@ -102,6 +104,12 @@ public:
 
   DecNumber& fromUInt32(uint32_t val)
   { decNumberFromUInt32(this, val); return *this; }
+
+  DecNumber& fromInt64(int64_t val)
+  { decNumberFromInt64(this, val); return *this; }
+
+  DecNumber& fromUInt64(uint64_t val)
+  { decNumberFromUInt64(this, val); return *this; }
 
   DecNumber& fromString(const char* str, DecContext* c = nullptr)
   { decNumberFromString(this, str, Cxt(c)); return *this; }
